@@ -6,7 +6,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j; // <-- IMPORT THIS
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.lang.NonNull;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -20,10 +20,10 @@ import java.io.IOException;
 
 @Component
 @RequiredArgsConstructor
-@Slf4j // <-- ADD THIS ANNOTATION
+@Slf4j
 public class JwtRequestFilter extends OncePerRequestFilter {
 
-	private final JwtUtil jwtUtil;
+    private final JwtUtil jwtUtil;
     private final UserDetailsService userDetailsService;
 
     @Override
@@ -47,7 +47,8 @@ public class JwtRequestFilter extends OncePerRequestFilter {
         try {
             userEmail = jwtUtil.getUsernameFromToken(jwt);
         } catch (ExpiredJwtException e) {
-            logger.warn("JWT token has expired: {}"); // <-- USE 'log' INSTEAD OF 'logger'
+            // THE FIX: Changed 'logger' to 'log' and added the exception message.
+            log.warn("JWT token has expired: {}", e.getMessage());
             filterChain.doFilter(request, response);
             return;
         }
