@@ -1,4 +1,7 @@
 // Polyfill for Vite to handle 'global' not being defined
+if (typeof global === 'undefined') {
+  window.global = window;
+}
 
 import React, { useState, useEffect, createContext, useContext, useRef } from 'react';
 import { BrowserRouter, Routes, Route, Link, useNavigate, useParams, Navigate } from 'react-router-dom';
@@ -84,6 +87,85 @@ const ProtectedRoute = ({ children }) => {
 
 
 // --- Pages & Components ---
+
+const HomePage = () => {
+    return (
+        <div className="bg-gray-50 text-gray-800">
+            {/* Header */}
+            <nav className="bg-white shadow-md fixed w-full z-10">
+                <div className="container mx-auto px-6 py-4 flex justify-between items-center">
+                    <h1 className="text-2xl font-bold text-blue-600">VidyaConnect</h1>
+                    <div>
+                        <Link to="/login" className="text-blue-600 hover:text-blue-800 font-semibold mr-4">Login</Link>
+                        <Link to="/register" className="bg-blue-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-700 transition duration-300">
+                            Sign Up
+                        </Link>
+                    </div>
+                </div>
+            </nav>
+
+            {/* Hero Section */}
+            <header className="pt-32 pb-16 bg-white">
+                <div className="container mx-auto px-6 text-center">
+                    <h2 className="text-4xl md:text-5xl font-extrabold text-gray-900 leading-tight">
+                        Resilient Education for a Connected India.
+                    </h2>
+                    <p className="mt-4 text-lg text-gray-600 max-w-2xl mx-auto">
+                        VidyaConnect is a virtual classroom designed from the ground up to work on low-bandwidth and unstable networks, ensuring that learning never stops.
+                    </p>
+                    <div className="mt-8">
+                        <Link to="/register" className="bg-blue-600 text-white font-bold py-3 px-8 rounded-lg text-lg hover:bg-blue-700 transition duration-300">
+                            Get Started for Free
+                        </Link>
+                    </div>
+                </div>
+            </header>
+
+            {/* Features Section */}
+            <section className="py-20 bg-gray-50">
+                <div className="container mx-auto px-6">
+                    <h3 className="text-3xl font-bold text-center mb-12">Why VidyaConnect?</h3>
+                    <div className="grid md:grid-cols-3 gap-10">
+                        {/* Feature 1 */}
+                        <div className="bg-white p-8 rounded-lg shadow-lg text-center">
+                            <div className="bg-blue-100 text-blue-600 rounded-full h-16 w-16 flex items-center justify-center mx-auto mb-6">
+                                {/* SVG Icon for Audio */}
+                                <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.858 15.858a5 5 0 01-2.828-7.072m9.9 9.9a1.5 1.5 0 11-2.122-2.122 1.5 1.5 0 012.122 2.122z" /></svg>
+                            </div>
+                            <h4 className="text-xl font-bold mb-2">Audio-First Philosophy</h4>
+                            <p className="text-gray-600">We prioritize crystal-clear audio above all else, ensuring the lecturer's voice is never lost, even when the internet connection is weak.</p>
+                        </div>
+                        {/* Feature 2 */}
+                        <div className="bg-white p-8 rounded-lg shadow-lg text-center">
+                            <div className="bg-blue-100 text-blue-600 rounded-full h-16 w-16 flex items-center justify-center mx-auto mb-6">
+                                {/* SVG Icon for Adaptive Streaming */}
+                                <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
+                            </div>
+                            <h4 className="text-xl font-bold mb-2">Adaptive Streaming</h4>
+                            <p className="text-gray-600">Our platform intelligently disables video and other heavy content on poor connections to prevent buffering and session drops.</p>
+                        </div>
+                        {/* Feature 3 */}
+                        <div className="bg-white p-8 rounded-lg shadow-lg text-center">
+                             <div className="bg-blue-100 text-blue-600 rounded-full h-16 w-16 flex items-center justify-center mx-auto mb-6">
+                                {/* SVG Icon for Download/Offline */}
+                                <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg>
+                            </div>
+                            <h4 className="text-xl font-bold mb-2">Asynchronous Access</h4>
+                            <p className="text-gray-600">Students can download highly-compressed lecture recordings during off-peak hours to watch offline, saving precious data.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            {/* Footer */}
+            <footer className="bg-white">
+                <div className="container mx-auto px-6 py-8 text-center text-gray-600">
+                    <p>&copy; 2025 VidyaConnect. An initiative for a digitally empowered India.</p>
+                </div>
+            </footer>
+        </div>
+    );
+};
 
 const LoginPage = () => {
     const [email, setEmail] = useState('');
@@ -398,14 +480,14 @@ const SessionPage = () => {
 // --- Main App Component ---
 function App() {
     return (
-        <BrowserRouter>
+        <BrowserRouter> 
             <AuthProvider>
                 <Routes>
+                    <Route path="/" element={<HomePage />} />
                     <Route path="/login" element={<LoginPage />} />
                     <Route path="/register" element={<RegisterPage />} />
                     <Route path="/dashboard" element={<ProtectedRoute><DashboardPage /></ProtectedRoute>} />
                     <Route path="/session/:sessionId" element={<ProtectedRoute><SessionPage /></ProtectedRoute>} />
-                    <Route path="/" element={<Navigate to="/dashboard" />} />
                 </Routes>
             </AuthProvider>
         </BrowserRouter>
