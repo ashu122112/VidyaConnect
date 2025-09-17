@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -31,7 +32,7 @@ public class SessionController {
         Session newSession = new Session();
         newSession.setTitle(payload.get("title"));
         newSession.setTeacher(teacher);
-        newSession.setStatus("ACTIVE");
+        newSession.setActive(true);
         sessionRepository.save(newSession);
 
         return ResponseEntity.ok(newSession);
@@ -39,14 +40,17 @@ public class SessionController {
 
     @GetMapping("/active")
     public ResponseEntity<List<Map<String, Object>>> getActiveSessions() {
-        List<Session> activeSessions = sessionRepository.findByStatus("ACTIVE");
-        List<Map<String, Object>> result = activeSessions.stream()
-            .map(session -> Map.of(
-                "id", session.getId(),
-                "title", session.getTitle(),
-                "teacherName", session.getTeacher().getEmail()
-            ))
-            .collect(Collectors.toList());
+    	List<Session> activeSessions = sessionRepository.findByActive(true);
+    	// Corrected code using HashMap
+    	List<Map<String, Object>> result = activeSessions.stream()
+    	    .map(session -> {
+    	        Map<String, Object> sessionData = new HashMap<>();
+    	        sessionData.put("id", session.getId());
+    	        sessionData.put("title", session.getTitle());
+    	        sessionData.put("teacherName", session.getTeacher().getEmail());
+    	        return sessionData;
+    	    })
+    	    .collect(Collectors.toList());
         return ResponseEntity.ok(result);
     }
 }
