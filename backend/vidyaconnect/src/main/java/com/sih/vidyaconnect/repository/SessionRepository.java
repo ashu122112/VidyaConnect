@@ -1,10 +1,11 @@
 package com.sih.vidyaconnect.repository;
 
-import com.sih.vidyaconnect.model.Session;
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
+import com.sih.vidyaconnect.model.Session;
 
 @Repository
 public interface SessionRepository extends JpaRepository<Session, Long> {

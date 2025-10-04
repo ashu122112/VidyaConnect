@@ -1,10 +1,5 @@
 package com.sih.vidyaconnect.controller;
 
-import com.sih.vidyaconnect.dto.AuthDtos;
-import com.sih.vidyaconnect.model.Role;
-import com.sih.vidyaconnect.model.User;
-import com.sih.vidyaconnect.repository.UserRepository;
-import com.sih.vidyaconnect.security.JwtUtil;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -15,6 +10,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.sih.vidyaconnect.dto.AuthDtos;
+import com.sih.vidyaconnect.model.User;
+import com.sih.vidyaconnect.repository.UserRepository;
+import com.sih.vidyaconnect.security.JwtUtil;
 
 @RestController
 @RequestMapping("/api/auth")
